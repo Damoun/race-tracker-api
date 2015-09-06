@@ -3,7 +3,9 @@ This file provide the API of the race-tracker.
 """
 from redis import Redis
 from rq import Queue
-from bottle import route, run, request
+from bottle import Bottle, request
+from bottleapi import WebApiError
+from bottleapi.jsonapi import json_endpoint
 
 import settings
 from .jobs import notify_race_subscribers
@@ -11,67 +13,56 @@ from .jobs import notify_race_subscribers
 
 REDIS = Redis()
 QUEUE = Queue(connection=REDIS)
+APP = Bottle()
 
 
-@route('/race', method='POST')
+@json_endpoint
 def create_race():
     """
     Register a new starting race.
     """
     abbrev = request.forms.get('abbrev')
     QUEUE.enqueue(notify_race_subscribers, abbrev)
-    return {'status': 'ok'}
 
 
-@route('/game/<abbrev>', method='GET')
+@json_endpoint
 def get_game(abbrev):
     """
     Retrieve information of a game.
     """
-    return {'status': 'ok', 'result': {'abbrev': abbrev}}
+    return {'abbrev': abbrev}
 
 
-@route('/game', method='POST')
+@json_endpoint
 def create_game():
     """
     Register a new game.
     """
-    return {'status': 'ok'}
+    pass
 
 
-@route('/games/', method='GET')
+@json_endpoint
 def list_game():
     """
     List registered game.
     """
-    return {'status': 'ok', 'result': []}
+    return []
 
 
-@route('/jobs/', method='GET')
+@json_endpoint
 def list_job():
     """
     List rq jobs.
     """
-    return {'status': 'ok', 'result': QUEUE.job_ids}
+    return QUEUE.job_ids
 
 
-@route('/job/<job_id>', method='GET')
+@json_endpoint
 def get_job(job_id):
     """
     Retrieve information of a rq job.
     """
     job = QUEUE.fetch_job(job_id)
-    if job:
-        return {'status': 'ok', 'result': job}
-    else:
-        return {
-            'status': 'error',
-            'message': 'Job id does not exist',
-            'result': job
-        }
-
-run(
-    host=settings.API_SETTINGS['host'],
-    port=settings.API_SETTINGS['port'],
-    debug=settings.DEBUG
-)
+    if not job:
+        raise WebApiError('Job id (%s) does not exist' % job_id, status=400)
+    return job
