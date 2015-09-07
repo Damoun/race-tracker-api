@@ -9,6 +9,7 @@ from bottleapi.jsonapi import json_endpoint
 
 import settings
 from .jobs import notify_race_subscribers
+from .models import Game, Race, Subscriber
 
 
 REDIS = Redis()
@@ -17,7 +18,7 @@ APP = Bottle()
 
 
 @json_endpoint
-def create_race():
+def create_race(db):
     """
     Register a new starting race.
     """
@@ -26,15 +27,15 @@ def create_race():
 
 
 @json_endpoint
-def get_game(abbrev):
+def get_game(game_id, db):
     """
     Retrieve information of a game.
     """
-    return {'abbrev': abbrev}
+    return db.query(Game).filter_by(id=game_id).first()
 
 
 @json_endpoint
-def create_game():
+def create_game(db):
     """
     Register a new game.
     """
@@ -42,15 +43,15 @@ def create_game():
 
 
 @json_endpoint
-def list_game():
+def list_game(db):
     """
     List registered game.
     """
-    return []
+    return db.query(Game).all()
 
 
 @json_endpoint
-def list_job():
+def list_job(db):
     """
     List rq jobs.
     """
@@ -58,7 +59,7 @@ def list_job():
 
 
 @json_endpoint
-def get_job(job_id):
+def get_job(job_id, _):
     """
     Retrieve information of a rq job.
     """

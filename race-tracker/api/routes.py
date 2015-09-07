@@ -13,7 +13,7 @@ def setup_routing(app):
 
     app.post('/game', callback=create_game)
     app.get('/games/', callback=list_game)
-    app.get('/game/<abbrev>', callback=get_game)
+    app.get('/game/<game_id>', callback=get_game)
 
     app.get('/jobs/', callback=list_job)
     app.get('/job/<job_id>', callback=get_job)

@@ -4,3 +4,4 @@ bottle==0.12.8
 redis==2.10.3
 rq==0.5.5
 bottle-api==0.0.3
+bottle-sqlalchemy==0.4.2
