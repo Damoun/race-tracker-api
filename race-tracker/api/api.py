@@ -7,8 +7,7 @@ from bottle import Bottle, request
 from bottleapi import WebApiError
 from bottleapi.jsonapi import json_endpoint
 
-import settings
-from .jobs import notify_race_subscribers
+from .jobs import schedule_race_notification
 from .models import Game, Race, Subscriber
 
 
@@ -23,7 +22,7 @@ def create_race(db):
     Register a new starting race.
     """
     abbrev = request.forms.get('abbrev')
-    QUEUE.enqueue(notify_race_subscribers, abbrev)
+    QUEUE.enqueue(schedule_race_notification, db, QUEUE, abbrev)
 
 
 @json_endpoint

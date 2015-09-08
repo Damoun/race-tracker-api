@@ -2,7 +2,8 @@
 This file describe the database schema.
 """
 from bottle.ext import sqlalchemy
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, Table
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -15,6 +16,13 @@ plugin = sqlalchemy.Plugin(
 )
 
 
+subscriber_race = Table(
+    'subscribers_races', Base.metadata,
+    Column('subscriber', Integer, ForeignKey('subscribers.id')),
+    Column('race', Integer, ForeignKey('races.id'))
+)
+
+
 class Subscriber(Base):
     """
     This class represent a subscriber.
@@ -22,8 +30,8 @@ class Subscriber(Base):
     __tablename__ = 'subscribers'
 
     id = Column(Integer, primary_key=True)
-    race_id = Column(Integer, ForeignKey('races.id'))
-    races = relationship("Race")
+    races = relationship("Race", secondary=subscriber_race,
+                         backref="subscribers")
 
     def __init__(self):
         pass
@@ -37,7 +45,7 @@ class Game(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    races = relationship("Race")
+    races = relationship("Race", backref="game")
 
     def __init__(self, name):
         self.name = name

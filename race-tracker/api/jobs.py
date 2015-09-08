@@ -1,16 +1,20 @@
 """
 This file provide function to be executed by a worker.
 """
-from redis import Redis
-from rq import Queue
+from .models import Race
 
 
-REDIS = Redis()
-QUEUE = Queue(connection=REDIS)
-
-
-def notify_race_subscribers(abbrev):
+def send_notification(subscriber, race):
     """
-    Retrieve subscribers of a race and schedule notification
+    Send the notification to the subscriber.
     """
     pass
+
+
+def schedule_race_notification(db, queue, abbrev):
+    """
+    Retrieve subscribers of a race and schedule notification.
+    """
+    race = db.query(Race).filter_by(abbrev=abbrev).first()
+    for subscriber in race.subscribers:
+        queue.enqueue(send_notification, subscriber, race)
