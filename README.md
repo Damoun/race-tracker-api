@@ -1,0 +1,2 @@
+# api [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](/LICENSE) [![Build Status](https://travis-ci.org/race-tracker/api.svg)](https://travis-ci.org/race-tracker/api) [![codecov.io](http://codecov.io/github/race-tracker/api/coverage.svg?branch=develop)](http://codecov.io/github/race-tracker/api?branch=develop) [![Codacy Badge](https://api.codacy.com/project/badge/b4e913de819640dda287f0c21c66f22d)](https://www.codacy.com/app/damoun-github/api)
+Backend API of the race-tracker service
