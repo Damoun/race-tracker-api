@@ -1,2 +1,5 @@
 -r _base.txt
 coverage==3.7.1
+pylint==1.4.4
+pylint-flask==0.1
+flake8==2.4.1
