@@ -3,7 +3,7 @@ import logging
 import json
 import os
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask
 
 from config import DefaultConfig
 from .helpers import load_module_instances
@@ -46,32 +46,6 @@ def configure_extensions(app):
                                      package="race_tracker_api"):
         if getattr(ext, 'init_app', False):
             ext.init_app(app)
-
-
-# pylint: disable=unused-variable
-def configure_error_handlers(app):
-    """Configure errors pages"""
-    @app.errorhandler(401)
-    def unauthorized(error):
-        """Error handler on unauthorized request"""
-        if request.is_xhr:
-            return jsonify(error="Unauthorized")
-        return render_template("errors/unauthorized.html", error=error), 401
-
-    @app.errorhandler(404)
-    def not_found(error):
-        """Error handler on resource not found"""
-        if request.is_xhr:
-            return jsonify(error="Page not found")
-        return render_template("errors/not_found.html", error=error), 404
-
-    @app.errorhandler(500)
-    def internal_server_error(error):
-        """Error handler on internal server error"""
-        if request.is_xhr:
-            return jsonify(error="An error has occurred")
-        return render_template("errors/internal_server_error.html",
-                               error=error), 500
 
 
 def configure_logging(app):
