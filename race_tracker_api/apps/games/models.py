@@ -8,6 +8,7 @@ class Game(Model):
     """This class describe the SQL schema of a game"""
     __tablename__ = 'games'
 
-    id = DB.Column(DB.Integer, primary_key=True, unique=True, nullable=False)
+    game_id = DB.Column(DB.Integer, primary_key=True, unique=True,
+                        nullable=False)
     name = DB.Column(DB.String(254), nullable=False)
-    abbrev = DB.Column(DB.String(10), unique=True, nullable=False)
+    abbrev = DB.Column(DB.String(50), unique=True, nullable=False)
