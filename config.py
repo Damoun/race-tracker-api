@@ -1,6 +1,9 @@
 """This file implement the application configuration"""
 import os
 
+from race_tracker_api.apps.users import USERS
+from race_tracker_api.apps.games import GAMES
+
 
 # pylint: disable=too-few-public-methods
 class DefaultConfig(object):
@@ -20,6 +23,6 @@ class DefaultConfig(object):
         PROJECT_ROOT, 'race_tracker_api', 'apps', 'templates'
     )
 
-    BLUEPRINTS = ()
+    BLUEPRINTS = (USERS, GAMES)
 
     LOG_INI = 'etc/logging.ini.json'
