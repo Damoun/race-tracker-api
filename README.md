@@ -4,7 +4,7 @@ Backend API of the race-tracker service
 ## Quickstart
 
 ```shell
- pip install -e '.[dev]'
+pip install -e '.'
 python manage.py runserver
 ```
 

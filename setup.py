@@ -56,7 +56,8 @@ setup(
         'Flask==0.10.1',
         'Flask-RESTful==0.3.4',
         'Flask-RQ==0.2',
-        'Flask-SQLAlchemy==2.0'
+        'Flask-SQLAlchemy==2.0',
+        'Flask-Script==2.0.5'
     ],
     license=meta['license'],
     zip_safe=False,
@@ -72,8 +73,5 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5'
     ],
-    test_suite='tests',
-    dev_require=[
-        'Flask-Script==2.0.5'
-    ],
+    test_suite='tests'
 )
