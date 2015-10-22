@@ -57,7 +57,8 @@ setup(
         'Flask-RESTful==0.3.4',
         'Flask-RQ==0.2',
         'Flask-SQLAlchemy==2.0',
-        'Flask-Script==2.0.5'
+        'Flask-Script==2.0.5',
+        'Flask-Migrate==1.6.0'
     ],
     license=meta['license'],
     zip_safe=False,
