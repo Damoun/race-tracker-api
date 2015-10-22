@@ -17,11 +17,4 @@ class DefaultConfig(object):
 
     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
 
-    STATIC_DIR = os.path.join(
-        PROJECT_ROOT, 'race_tracker_api', 'apps', 'static'
-    )
-    TEMPLATE_DIR = os.path.join(
-        PROJECT_ROOT, 'race_tracker_api', 'apps', 'templates'
-    )
-
     BLUEPRINTS = (USERS, GAMES)
