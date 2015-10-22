@@ -17,7 +17,6 @@ def get_app(config=None, **kwargs):
 
     configure_extensions(app)
     configure_blueprints(app)
-    configure_logging(app)
 
     return app
 
@@ -46,13 +45,3 @@ def configure_extensions(app):
                                      package="race_tracker_api"):
         if getattr(ext, 'init_app', False):
             ext.init_app(app)
-
-
-def configure_logging(app):
-    """Configure logging"""
-    log_ini = os.path.join(app.root_path, app.config['LOG_INI'])
-
-    if os.path.exists(log_ini):
-        with open(log_ini, 'rt') as handle:
-            log_config = json.load(handle)
-        logging.config.dictConfig(log_config)

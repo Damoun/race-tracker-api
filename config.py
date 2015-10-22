@@ -9,6 +9,7 @@ from race_tracker_api.apps.games import GAMES
 class DefaultConfig(object):
     """This class provide the default configuration"""
     DEBUG = True
+    FLASK_LOG_LEVEL = 'DEBUG'
 
     PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
     PROJECT_NAME = "race-tracker-api"
@@ -24,5 +25,3 @@ class DefaultConfig(object):
     )
 
     BLUEPRINTS = (USERS, GAMES)
-
-    LOG_INI = 'etc/logging.ini.json'
